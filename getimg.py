@@ -4,18 +4,20 @@ from bs4 import BeautifulSoup as soup
 import os
 import math
 import time
+from colorama import Fore,Back,init
+init(autoreset=True)
 # ----------------------------setting up working directories---------------------------------------
 if not (os.path.isdir('downloads')):
     os.makedirs('downloads')
     print('directory downloads created')
 os.chdir('./downloads')
-print("current directory :", os.getcwd())
+print(Fore.LIGHTGREEN_EX+"current directory :", os.getcwd())
 url = input('enter url :')
-print('url set to -->', url)
+print(Fore.LIGHTGREEN_EX+'url set to -->', url)
 if "album" in url:
     try:
         modelname = url.split('/')[4].split('.')[0]
-        print(modelname)
+        print(Fore.LIGHTGREEN_EX+"album name :", modelname)
         if os.path.isdir(modelname):
             os.chdir(f'./{modelname}')
         else:
@@ -27,13 +29,13 @@ try:
     numberofpages = int(input('give me number of pages :'))
 except Exception:
     numberofpages = None
-    print('excp2 auto download mode activated')
+    print(Fore.YELLOW+'auto download mode activated')
 # ----------------------------- where shit happens----------------------------------------------
 i = 0
 currentpage = 1
 settotalimgs = True
 totalimages = ""
-print('::::::::::::::::::::::::::::::::::::::::::::::::::::::::')
+print(Fore.RED+'::::::::::::::::::::::::::::::::::::::::::::::::::::::::')
 try:
     while True:
         print('current page :', currentpage)
@@ -51,7 +53,7 @@ try:
                     "span", {"data-text": "image-count"}).text
             except Exception:
                 totalimages = "unkown"
-                print('excp3 unkonwn image number')
+                print(Fore.RED+'excp3 unkonwn image number')
             settotalimgs = False
         thmbnailanchors = html.findAll(attrs={"class": "--media"})
         links = html.findAll(attrs={"data-pagination": "next"})
@@ -59,7 +61,7 @@ try:
             url = links[0].attrs['href']
         except Exception as err:
             url = None
-            print("downloading will stop automatically after all images are downloaded")
+            print(Fore.YELLOW+"downloading will stop automatically after all images are downloaded")
         print('next page url :', url)
         for ref in thmbnailanchors:
             imgdata = req.get(ref.attrs['href'])
@@ -79,17 +81,17 @@ try:
                         i += 1
                         # print(f'downloaded images : {i}')
                         print(
-                            f'latest download : {currentimg} ; images downloaded: {i} ; total images :{totalimages if len(totalimages) else "--> dynamic"}', end='\r')
+                           Fore.LIGHTMAGENTA_EX+ f'latest download : {currentimg} ; images downloaded: {i} ; total images :{totalimages if len(totalimages) else "--> dynamic"}', end='\r')
                         time.sleep(0.5)
                     except Exception as err:
-                        print("excp4", err)
+                        print(Fore.RED+"excp4", err)
 
             except Exception as err:
-                print("excp5", err)
+                print(Fore.RED+"excp5", err)
         print('page switched')
         if numberofpages != None:
             if currentpage > numberofpages:
                 break
     input('--------------------done press enter----------------------')
 except Exception as err:
-    print("excp6", err)
+    print(Fore.RED+"excp6", err)
