@@ -89,7 +89,7 @@ try:
         print('page switched')
         currentpage += 1
         if numberofpages != None:
-            if currentpage > numberofpages:
+            if currentpage >= numberofpages:
                 break
         
     input('--------------------done press enter----------------------')
