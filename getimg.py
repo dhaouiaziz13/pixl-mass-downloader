@@ -22,16 +22,17 @@ if "album" in url:
             os.makedirs(modelname)
             os.chdir(f'./{modelname}')
     except Exception as err:
-        print(err)
+        print("excp1", err)
 try:
     numberofpages = int(input('give me number of pages :'))
 except Exception:
     numberofpages = None
-    print('auto download mode activated')
+    print('excp2 auto download mode activated')
 # ----------------------------- where shit happens----------------------------------------------
 i = 0
 currentpage = 1
 settotalimgs = True
+totalimages=""
 print('::::::::::::::::::::::::::::::::::::::::::::::::::::::::')
 try:
     while True:
@@ -46,10 +47,11 @@ try:
         html = soup(data.text, 'html.parser')
         if "album" in url and settotalimgs:
             try:
-                totalimages = html.find("span",{"data-text": "image-count"}).text
-            except Exception :
-                totalimages="unkown"
-                print('unkonwn image number')
+                totalimages = html.find(
+                    "span", {"data-text": "image-count"}).text
+            except Exception:
+                totalimages = "unkown"
+                print('excp3 unkonwn image number')
             settotalimgs = False
         thmbnailanchors = html.findAll(attrs={"class": "--media"})
         links = html.findAll(attrs={"data-pagination": "next"})
@@ -77,17 +79,17 @@ try:
                         i += 1
                         # print(f'downloaded images : {i}')
                         print(
-                            f'latest download : {currentimg} ; images downloaded: {i} ; total images :{totalimages if "album" in url else "--> dynamic"}', end='\r')
+                            f'latest download : {currentimg} ; images downloaded: {i} ; total images :{totalimages if len(totalimages) else "--> dynamic"}', end='\r')
                         time.sleep(0.5)
                     except Exception as err:
-                        print(err)
+                        print("excp4", err)
 
             except Exception as err:
-                print(err)
+                print("excp5", err)
         print('page switched')
-        if numberofpages!=None:
+        if numberofpages != None:
             if currentpage > numberofpages:
                 break
     input('--------------------done press enter----------------------')
 except Exception as err:
-    print(err)
+    print("excp6", err)
