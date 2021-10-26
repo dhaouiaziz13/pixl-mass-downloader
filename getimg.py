@@ -32,7 +32,7 @@ except Exception:
 i = 0
 currentpage = 1
 settotalimgs = True
-totalimages=""
+totalimages = ""
 print('::::::::::::::::::::::::::::::::::::::::::::::::::::::::')
 try:
     while True:
