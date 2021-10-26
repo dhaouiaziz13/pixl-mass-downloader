@@ -38,14 +38,13 @@ totalimages = ""
 print(Fore.RED+'::::::::::::::::::::::::::::::::::::::::::::::::::::::::')
 try:
     while True:
-        print('current page :', currentpage)
+        # print('current page :', currentpage,'\n')
         if not url:
             break
         data = req.get(url)
         if not data.status_code == 200:
             print('retrying')
             continue
-        currentpage += 1
         html = soup(data.text, 'html.parser')
         if "album" in url and settotalimgs:
             try:
@@ -81,17 +80,17 @@ try:
                         i += 1
                         # print(f'downloaded images : {i}')
                         print(
-                           Fore.LIGHTMAGENTA_EX+ f'latest download : {currentimg} ; images downloaded: {i} ; total images :{totalimages if len(totalimages) else "--> dynamic"}', end='\r')
+                           Fore.LIGHTMAGENTA_EX+ f'downoladed : {currentimg} ; images downloaded: {i} ; total images :{totalimages if len(totalimages) else "--> dynamic"}; page :{currentpage}')
                         time.sleep(0.5)
                     except Exception as err:
                         print(Fore.RED+"excp4", err)
-
             except Exception as err:
                 print(Fore.RED+"excp5", err)
-        # print('page switched')
+        print('page switched')
         if numberofpages != None:
             if currentpage > numberofpages:
                 break
+        currentpage += 1
     input('--------------------done press enter----------------------')
 except Exception as err:
     print(Fore.RED+"excp6", err)
