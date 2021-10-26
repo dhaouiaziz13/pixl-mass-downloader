@@ -88,7 +88,7 @@ try:
                 print(Fore.RED+"excp5", err)
         print('page switched')
         if numberofpages != None:
-            if currentpage > numberofpages:
+            if currentpage >= numberofpages:
                 break
         currentpage += 1
     input('--------------------done press enter----------------------')
