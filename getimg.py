@@ -87,10 +87,11 @@ try:
             except Exception as err:
                 print(Fore.RED+"excp5", err)
         print('page switched')
-        if numberofpages != None:
-            if currentpage >= numberofpages:
-                break
         currentpage += 1
+        if numberofpages != None:
+            if currentpage > numberofpages:
+                break
+        
     input('--------------------done press enter----------------------')
 except Exception as err:
     print(Fore.RED+"excp6", err)
